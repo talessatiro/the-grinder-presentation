@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br" ng-app="app">
+  <head>
+    <!--<meta charset="utf-8"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- As 3 meta tags acima *devem* vir em primeiro lugar dentro do `head`; qualquer outro conte�do deve vir *ap�s* essas tags -->
+    <title>AngularJS - Route and Form</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/mycss.css" rel="stylesheet">
+  
+  </head>
+  <body >
+		<nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="#/">Hello</a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				<li><a href="#/">Home</a></li>
+				<li><a href="#/customers">Customers</a></li>
+			  </ul>
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<div ng-view> 
+		</div>
+  </body>
+   <!-- jQuery (obrigat�rio para plugins JavaScript do Bootstrap) -->
+    <script src="js/lib/jquery-2.2.3.min.js"></script>
+    <!-- Inclui todos os plugins compilados (abaixo), ou inclua arquivos separadados se necess�rio -->
+    <script src="js/lib/bootstrap.min.js"></script>
+
+    <!-- Arquivos do AngularJS -->
+    <script type="text/javascript" src="js/lib/angular.js"></script>
+    <script type="text/javascript" src="js/lib/angular-route.js"></script>
+    <script type="text/javascript" src="js/angCourse/app.module.js"></script>
+    <script type="text/javascript" src="js/angCourse/app.config.js"></script>
+    <script type="text/javascript" src="js/angCourse/customer/customer.controller.js"></script>
+    <script type="text/javascript" src="js/angCourse/customer/customer.service.js"></script>
+</html>
