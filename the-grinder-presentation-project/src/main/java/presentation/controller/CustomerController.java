@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import presentation.document.CustomerDocument;
 import presentation.domain.Customer;
 import presentation.repository.CustomerRepository;
+import presentation.service.CustomerService;
 
 import java.util.List;
 
@@ -18,35 +19,33 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<CustomerDocument> list() {
-        return customerRepository.findAll();
+        return customerService.listCustomers();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{customerId:.+}")
     public CustomerDocument findCustomer(@PathVariable final String customerId) {
-        return customerRepository.findOne(customerId);
+        return this.customerService.findCustomer(customerId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{customerId:.+}")
     public void deleteCustomer(@PathVariable final String customerId) {
-        CustomerDocument customerToBeDeleted = new CustomerDocument();
-        customerToBeDeleted.setId(customerId);
-        customerRepository.delete(customerToBeDeleted);
+        this.customerService.removeCustomer(customerId);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     public CustomerDocument createCustomer(@RequestBody final Customer customer) {
         CustomerDocument customerDocument = new CustomerDocument(customer.getFirstName(), customer.getLastName());
-        return customerRepository.save(customerDocument);
+        return this.customerService.createCustomer(customerDocument);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public CustomerDocument updateCustomer(@RequestBody final Customer customer) {
         CustomerDocument customerDocument = new CustomerDocument(customer.getId(), customer.getFirstName(), customer.getLastName());
-        return customerRepository.save(customerDocument);
+        return this.customerService.editCustomer(customerDocument);
     }
 
 }
