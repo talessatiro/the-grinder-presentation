@@ -12,6 +12,7 @@ public class CustomerDocument {
 
     private String firstName;
     private String lastName;
+    private String tag;
 
     public CustomerDocument() {}
 
@@ -48,6 +49,14 @@ public class CustomerDocument {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
     @Override

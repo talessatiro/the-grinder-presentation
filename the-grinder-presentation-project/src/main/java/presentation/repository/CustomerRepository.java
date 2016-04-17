@@ -11,5 +11,6 @@ public interface CustomerRepository extends MongoRepository<CustomerDocument, St
 
     CustomerDocument findByFirstName(String firstName);
     List<CustomerDocument> findByLastName(String lastName);
+    List<CustomerDocument> findByTag(String tag);
 
 }

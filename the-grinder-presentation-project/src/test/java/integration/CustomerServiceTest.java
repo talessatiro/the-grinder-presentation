@@ -13,23 +13,28 @@ import presentation.Application;
 import presentation.document.CustomerDocument;
 import presentation.service.CustomerService;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
 public class CustomerServiceTest {
+
+	private static final String TEST_TAG = "TEST_DATA";
 
 	@Autowired
 	private CustomerService customerService;
 
 	@After
 	public void after(){
-		customerService.clearCustomers();
+		List<CustomerDocument> customersToBeDeleted = customerService.listCustomersByTag(TEST_TAG);
+		customerService.removeCustomers(customersToBeDeleted);
 	}
 
 	@Test
 	@Rollback
 	public void testCreateCustomer() {
 		CustomerDocument customerDocument = new CustomerDocument("Tales", "Satiro");
-		customerDocument = customerService.createCustomer(customerDocument);
+		customerDocument = customerService.createCustomer(applyTestTag(customerDocument));
 
 		Assert.assertNotNull(customerDocument.getId());
 	}
@@ -38,7 +43,7 @@ public class CustomerServiceTest {
 	@Rollback
 	public void testEditCustomer() {
 		CustomerDocument customerDocument = new CustomerDocument("Tales", "Satiro");
-		customerDocument = customerService.createCustomer(customerDocument);
+		customerDocument = customerService.createCustomer(applyTestTag(customerDocument));
 
 		String customerId = customerDocument.getId();
 		Assert.assertNotNull(customerId);
@@ -55,7 +60,7 @@ public class CustomerServiceTest {
 	@Rollback
 	public void testRemoveCustomer() {
 		CustomerDocument customerDocument = new CustomerDocument("Tales", "Satiro");
-		customerDocument = customerService.createCustomer(customerDocument);
+		customerDocument = customerService.createCustomer(applyTestTag(customerDocument));
 
 		Assert.assertNotNull(customerDocument.getId());
 
@@ -67,16 +72,16 @@ public class CustomerServiceTest {
 
 	@Test
 	@Rollback
-	public void testFindCustomers() {
+	public void testListCustomers() {
 		CustomerDocument customerDocument = new CustomerDocument("Tales", "Satiro");
 		CustomerDocument customerDocument2 = new CustomerDocument("Heitor", "Lira");
-		customerDocument = customerService.createCustomer(customerDocument);
-		customerDocument2 = customerService.createCustomer(customerDocument2);
+		customerDocument = customerService.createCustomer(applyTestTag(customerDocument));
+		customerDocument2 = customerService.createCustomer(applyTestTag(customerDocument2));
 
 		Assert.assertNotNull(customerDocument.getId());
 		Assert.assertNotNull(customerDocument2.getId());
 
-		Assert.assertEquals(2, customerService.listCustomers().size());
+		Assert.assertEquals(2, customerService.listCustomersByTag(TEST_TAG).size());
 
 	}
 
@@ -84,13 +89,19 @@ public class CustomerServiceTest {
 	@Rollback
 	public void testFindCustomer() {
 		CustomerDocument customerDocument = new CustomerDocument("Tales", "Satiro");
-		customerDocument = customerService.createCustomer(customerDocument);
+		customerDocument = customerService.createCustomer(applyTestTag(customerDocument));
 
 		Assert.assertNotNull(customerDocument.getId());
 
 		CustomerDocument customerDocumentFound = customerService.findCustomer(customerDocument.getId());
 		Assert.assertEquals("Tales", customerDocumentFound.getFirstName());
 		Assert.assertEquals("Satiro", customerDocumentFound.getLastName());
+	}
+
+	private CustomerDocument applyTestTag(CustomerDocument customerDocument){
+		customerDocument.setTag(TEST_TAG);
+
+		return customerDocument;
 	}
 
 }

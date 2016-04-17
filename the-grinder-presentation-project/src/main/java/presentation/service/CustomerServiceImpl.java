@@ -35,6 +35,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     @Transactional
+    public void removeCustomers(List<CustomerDocument> customerDocuments) {
+        this.customerRepository.delete(customerDocuments);
+    }
+
+    @Override
+    @Transactional
     public CustomerDocument findCustomer(String customerId) {
         return this.customerRepository.findOne(customerId);
     }
@@ -46,7 +52,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void clearCustomers() {
-        this.customerRepository.deleteAll();
+    @Transactional
+    public List<CustomerDocument> listCustomersByTag(String tag) {
+        return this.customerRepository.findByTag(tag);
     }
 }

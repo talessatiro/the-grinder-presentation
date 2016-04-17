@@ -12,9 +12,11 @@ public interface CustomerService {
 
     void removeCustomer(String customerId);
 
+    void removeCustomers(List<CustomerDocument> customerDocuments);
+
     CustomerDocument findCustomer(String customerId);
 
     List<CustomerDocument> listCustomers();
 
-    void clearCustomers();
+    List<CustomerDocument> listCustomersByTag(String tag);
 }
